@@ -1,0 +1,15 @@
+-- -- Роли
+-- INSERT INTO roles (name) VALUES ('ROLE_USER');
+-- INSERT INTO roles (name) VALUES ('ROLE_ADMIN');
+--
+-- -- Admin (пароль: admin)
+-- INSERT INTO users (username, password, name, email, age)
+-- VALUES ('admin', '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Администратор', 'admin@mail.ru', 35);
+--
+-- INSERT INTO users_roles (user_id, role_id) VALUES (1, 2);
+--
+-- -- User (пароль: user)
+-- INSERT INTO users (username, password, name, email, age)
+-- VALUES ('user', '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Пользователь', 'user@mail.ru', 25);
+--
+-- INSERT INTO users_roles (user_id, role_id) VALUES (2, 1);
