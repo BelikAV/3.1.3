@@ -28,15 +28,22 @@ public class AdminController {
         return "admin";
     }
 
+    // New User
     @PostMapping("/add")
     public String addUser(@ModelAttribute("newUser") User user,
-                          @RequestParam("roleNames") String[] roleNames) {
+                          @RequestParam(value = "roleNames", required = false) String[] roleNames) {
 
-        Set<Role> roles = userService.mapRoleNames(roleNames);
-        userService.saveUserWithRoles(user, roles);
+        if (roleNames != null && roleNames.length > 0) {
+            Set<Role> roles = userService.mapRoleNames(roleNames);
+            userService.saveUserWithRoles(user, roles);
+        } else {
+            // если ролей нет в запросе – ставим дефолтную ROLE_USER
+            userService.saveUser(user);
+        }
         return "redirect:/admin";
     }
 
+    // Edit user
     @PostMapping("/edit")
     public String editUser(@RequestParam("id") Long id,
                            @RequestParam("username") String username,
@@ -44,7 +51,7 @@ public class AdminController {
                            @RequestParam("age") int age,
                            @RequestParam("email") String email,
                            @RequestParam(value = "password", required = false) String password,
-                           @RequestParam("roleNames") String[] roleNames) {
+                           @RequestParam(value = "roleNames", required = false) String[] roleNames) {
 
         User user = userService.getUser(id);
         user.setUsername(username);
@@ -56,8 +63,10 @@ public class AdminController {
             user.setPassword(password);
         }
 
-        Set<Role> roles = userService.mapRoleNames(roleNames);
-        user.setRoles(roles);
+        if (roleNames != null && roleNames.length > 0) {
+            Set<Role> roles = userService.mapRoleNames(roleNames);
+            user.setRoles(roles);
+        }
 
         userService.updateUser(user);
         return "redirect:/admin";
